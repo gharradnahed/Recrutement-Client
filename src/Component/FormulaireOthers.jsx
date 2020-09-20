@@ -17,7 +17,7 @@ export class FormulaireOthers extends Component {
         state:'',
         specialité:'',
     }
-  
+   
     handleChange = event => {
       this.setState({ name: event.target.value });
     }
