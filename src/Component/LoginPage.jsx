@@ -2,7 +2,7 @@ import '../App.css'
 import avatar from '../image/avatar.png';
 import { Form, Container, FormGroup, Label, Input, Button } from 'reactstrap';
 import { Link} from 'react-router-dom';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter,Route } from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 
 
@@ -46,14 +46,15 @@ export class LoginPage extends Component {
     render() {
         if (this.state.loggedIn==true) 
         { 
-       return <Redirect to ='/Admin'>
+       return <Redirect to ='/ Profil'>
 
        </Redirect>    
        }
         return (
-            <BrowserRouter>
+           /* <BrowserRouter>
             
-            
+            <Route path="/" component={LoginPage}>
+             </Route>*/
             
                 <div className='baground-image' >
                     <Container className='loginbox'>
@@ -91,7 +92,6 @@ export class LoginPage extends Component {
                         <br/>
                     </Container>
                 </div>
-            </BrowserRouter>
         )
     }
 }

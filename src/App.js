@@ -1,17 +1,19 @@
 import React,{Component} from 'react';
 import {Register}from './Register';
-import Axios from 'axios';
-
+import axios from 'axios';
 import { BrowserRouter,Route,Switch } from 'react-router-dom';
-
 import {LoginPage} from './Component/LoginPage';
-const api =Axios.create({
-  baseURL:'http://localhost:5000/user/'
+import Profile from './Profile';
+import CompanyProf from './CompanyProf';
+
+  axios.create({
+  baseURL: `http://localhost:5000`
+
 })
     class App extends Component{
         constructor(){
           super();
-          api.get('/').then(res=>{
+          axios.get('/').then(res=>{
             console.log(res.data);
           })
         }
@@ -21,9 +23,15 @@ const api =Axios.create({
           <div>
           <BrowserRouter>
           <Switch>
-          
-             <Route path="/Register" component={Register}></Route>
+
+             <Route path="/Register" component={Register}>
+             </Route>
+             <Route path="/Profile" component={Profile}></Route>
+             <Route path="/CompanyView" component={CompanyProf}></Route>
              <LoginPage/>
+           
+            
+
              </Switch>
              
           </BrowserRouter>

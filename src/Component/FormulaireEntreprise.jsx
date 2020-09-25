@@ -2,12 +2,84 @@ import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import { BrowserRouter} from 'react-router-dom';
+import axios  from 'axios';
+import {Redirect,BrowserRouter,Switch,Router,Route, Link} from 'react-router-dom';
 export class FormulaireEntreprise extends Component {
+    constructor(props) {
+        super();
+        
+    this.state = {
+        email: '',
+        password: '',
+        phoneNumber: '',
+        siteWeb:'',
+        adress: '',
+        age: '',
+        sex: '',
+        city: '',
+        state: '',
+ 
+        type: 'Entreprise',
+        redirect:false,
+        
+        
+    }
+   
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleChange(e) {
+        this.setState({[e.target.name]:e.target.value});
+    }
 
-
+      setRedirect = () => {
+            this.setState({
+              redirect: true
+            })
+          }
+    renderRedirect = () => {
+            if (this.state.redirect) {
+              return <Redirect to='/' />
+            }
+          }
+     handleSubmit(e)  { 
+            e.preventDefault();
+            
+        
+            const user = {
+                email: this.state.email,
+                password: this.state.password,
+                phoneNumber: this.state. phoneNumber,
+                siteWeb: this.state.siteWeb,
+                adress: this.state.adress,
+                age: this.state.  age,
+                sex: this.state.sex,
+                city: this.state.city,
+                state: this.state.state,
+              
+                
+    
+            };
+            axios.post(`http://localhost:5000/api/register`,  user )
+            .then(res => {
+              console.log(res);
+              console.log("test")
+              console.log(res.user);    
+            }) .catch(error => {
+                console.log(error.response)
+            });
+            this.setRedirect(); 
+          
+            
+        }    
+             
       
  render() {
+    if (this.state.redirect){
+        return(
+            <Redirect to ='/'></Redirect>
+        )
+    };
         return (
             <BrowserRouter>
             <div>
@@ -15,40 +87,36 @@ export class FormulaireEntreprise extends Component {
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Company@gmail.com"  />
+                            <Form.Control type="email" name='email' placeholder="Company@gmail.com" onChange={this.handleChange} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" onChange={this.handleChange} />
+                            <Form.Control type="password" name ='password' placeholder="Password" onChange={this.handleChange} />
                         </Form.Group>
                     </Form.Row>
-                    <Form>
-                        <Form.Group>
-                            <input type="file" />
-                        </Form.Group>
-                    </Form>
+                  
 
                     <Form.Group controlId="numtel">
                         <Form.Label>Numero du télephone</Form.Label>
-                        <Form.Control placeholder="00216 25 365 366 tunis for exemple" onChange={this.handleChange}  />
+                        <Form.Control placeholder="00216 25 365 366 "  name='phoneNumber'onChange={this.handleChange}  />
                     </Form.Group>
                     <Form.Group controlId="formGridAddress2">
                         <Form.Label>Site  Web</Form.Label>
-                        <Form.Control placeholder="www.exemple.com" onChange={this.handleChange} />
+                        <Form.Control placeholder="www.exemple.com" name='siteWeb' onChange={this.handleChange} />
                     </Form.Group>
                     <Form.Group controlId="formGridAddress1">
                         <Form.Label>Address</Form.Label>
-                        <Form.Control placeholder="1234 tunis for exemple" onChange={this.handleChange} />
+                        <Form.Control placeholder=" tunis for exemple" name='adress' onChange={this.handleChange} />
                     </Form.Group>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity"onChange={this.handleChange} >
-                            <Form.Label>City</Form.Label>
+                            <Form.Label name='city'>City  </Form.Label>
                             <Form.Control />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridState" onChange={this.handleChange} >
-                            <Form.Label>State</Form.Label>
+                            <Form.Label name='state'>State</Form.Label>
                             <Form.Control
                                 as="select"
                                 className="mr-sm-2"
@@ -84,8 +152,13 @@ export class FormulaireEntreprise extends Component {
                         </Form.Group>
 
                     </Form.Row>
-                    <Button variant="primary" type="submit">
-                        Submit
+                    <Button>
+                    <Link to = "/" variant="primary" type="submit" onClick= {this.handleSubmit}  >
+                    Submit
+                    
+                        
+                      
+  </Link>
   </Button>
                 </Form>
             </div>

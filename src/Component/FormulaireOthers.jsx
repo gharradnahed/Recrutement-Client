@@ -2,116 +2,205 @@ import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button'
-import {axios }from 'axios'
+import axios  from 'axios';
+import {Redirect,BrowserRouter,Switch,Router,Route, Link} from 'react-router-dom';
+import LoginPage from './LoginPage'
 export class FormulaireOthers extends Component {
-    
-    state = {
+    constructor(props) {
+        super();
+        let loggedIn = false ;
+    this.state = {
         nom: '',
-        prenom:'',
-        email:'',
+        prenom: '',
+        email: '',
         phone_number: '',
+        password:'',
         adresse: '',
-        age:'',
-        sex:'',
+        age: '',
+        sex: '',
         city: '',
-        state:'',
-        specialité:'',
+        state: '',
+        specialite: '',
+        type: 'User',
+        redirect:false,
+        
+        
     }
    
-    handleChange = event => {
-      this.setState({ name: event.target.value });
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     }
-  
-    handleSubmit = event => {
-      event.preventDefault();
-  
-      const user = {
-        nom: this.state.nom,
-        prenom: this.state.prenom,
-        email: this.state.email,
-        phone_number: this.state. phone_number,
-        adresse: this.state.  adresse,
-        age: this.state.age,
-        sex: this.state.sex,
-        city: this.state.city,
-        state: this.state. state,
-        specialité: this.state.specialité,
-      };
-  
-      axios.post(`https://jsonplaceholder.typicode.com/users`, { user })
+  /*  onChange = e => {
+        this.setState ({
+            [e.target.name]: e.target.value
+        }) }
+    submitForm= e => {
+        e.preventDefault(); 
+        
+             
+            // localStorage.setItem("token","aaaa");
+
+            this.setState({loggedIn:true})
+          
+
+        
+        
+       
+  handleSubmit = event => {
+        event.preventDefault();
+         console.log(this.state)
+        const user = {
+            nom: this.state.nom,
+            prenom: this.state.prenom,
+            email: this.state.email,
+            phoneNumber: this.state.phone_number,
+            adresse: this.state.adresse,
+            age: this.state.age,
+            sex: this.state.sex,
+            city: this.state.city,
+            state: this.state.state,
+            speciality: this.state.specialite,
+            type: this.state.USER,
+
+        };
+var check=false*/
+      
+    handleChange(e) {
+        this.setState({[e.target.name]:e.target.value});
+        // this.setState({nom: event.target.nom});
+        // this.setState({nom: event.target.prenom});
+        // this.setState({nom: event.target.email});
+        // this.setState({nom: event.target.phone_number});
+        // this.setState({nom: event.target.adresse});
+        // this.setState({nom: event.target.age});
+        // this.setState({nom: event.target.sex});
+        // this.setState({nom: event.target.specialite});
+    }
+    
+    setRedirect = () => {
+        this.setState({
+          redirect: true
+        })
+      }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+          return <Redirect to='/' />
+        }
+      }
+    handleSubmit(e)  { 
+        e.preventDefault();
+        
+    
+        const user = {
+            nom: this.state.nom,
+            prenom: this.state.prenom,
+            email: this.state.email,
+            phoneNumber: this.state.phone_number,
+            adresse: this.state.adresse,
+            age: this.state.age,
+            sex: this.state.sex,
+            city: this.state.city,
+            state: this.state.state,
+            speciality: this.state.specialite,
+            password: this.state.password,
+            
+
+        };
+         
+      
+        axios.post(`http://localhost:5000/api/register`,  user )
         .then(res => {
           console.log(res);
-          console.log(res.data);
-        })
-    }
+          console.log("test")
+          console.log(res.user);    
+        }) .catch(error => {
+            console.log(error.response)
+        });
+        this.setRedirect(); 
+      
+        
+    }    
+     
+  
     render() {
+        if (this.state.redirect){
+            return(
+                <Redirect to ='/'></Redirect>
+            )
+        };
         return (
+        
+                
+            
             <div>
-                <Form onSubmit={this.handleSubmit}>
-                <Form.Row>
-                        <Form.Group as={Col} controlId="formGridEmail">
+                <Form onSubmit={this.handleSubmit} >
+                    <Form.Row>
+                        <Form.Group as={Col}>
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Name"  onChange={this.handleChange}/>
+                            <Form.Control name="nom"  type="text" placeholder="Name" onChange={this.handleChange} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Last Named</Form.Label>
-                            <Form.Control type="text" placeholder="Last Name" onChange={this.handleChange} />
+                            <Form.Label>Last Name</Form.Label>
+                            <Form.Control type="text" name="prenom"  placeholder="Last Name" onChange={this.handleChange} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
-                        <Form.Group as={Col} controlId="formGridEmail">
+                        <Form.Group as={Col}>
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" placeholder="Company@gmail.com"  onChange={this.handleChange}/>
+                            <Form.Control type="email" name="email"  placeholder="Company@gmail.com" onChange={this.handleChange} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" onChange={this.handleChange} />
+                            <Form.Control type="password" name="password" placeholder="Password" onChange={this.handleChange} />
                         </Form.Group>
                     </Form.Row>
-                 
+
 
                     <Form.Group controlId="numtel">
-                        <Form.Label>Numero du télephone</Form.Label>
-                        <Form.Control placeholder="00216 25 365 366 tunis for exemple" onChange={this.handleChange} />
+                        <Form.Label>Phone number</Form.Label>
+
+                        <Form.Control placeholder="00216 25 365 366 tunis for exemple" name="phone_number" onChange={this.handleChange} />
                     </Form.Group>
-                    
+
                     <Form.Group controlId="formGridAddress1">
                         <Form.Label>speciality</Form.Label>
-                        <Form.Control placeholder="       " onChange={this.handleChange} />
+                        <Form.Control placeholder="       "   name="specialite" onChange={this.handleChange} />
                     </Form.Group>
                     <Form.Row>
-                    <Form.Group controlId="formGridAddress1">
+                        <Form.Group controlId="formGridAddress1">
                             <Form.Label>Address</Form.Label>
-                            <Form.Control placeholder="1234 tunis for exemple" onChange={this.handleChange} />
+                            <Form.Control type="text" name="adresse"  placeholder="1234 tunis for exemple" onChange={this.handleChange} />
                         </Form.Group>
                         <Form.Group controlId="formGridAddress1">
                             <Form.Label>Age</Form.Label>
-                            <Form.Control placeholder="Put your age please" onChange={this.handleChange} />
+                            <Form.Control placeholder="Put your age please" name="age" onChange={this.handleChange} />
                         </Form.Group>
-                       
-                        <Form.Group as={Col} controlId="formGridState">
+
+                        <Form.Group as={Col} controlId="formGridState" >
                             <Form.Label>Sex</Form.Label>
-                            <Form.Control as="select" defaultValue="Choose...">
+                            <Form.Control as="select" defaultValue="Choose..." name="sex"
+                              
+                              onChange={this.handleChange}>
                                 <option value="0">Choose...</option>
                                 <option value="1">Male</option>
                                 <option value="2">Female</option>
-                                onChange={this.handleChange}
+                                
                             </Form.Control >
                         </Form.Group>
-                      
+
 
                     </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>City</Form.Label>
-                            <Form.Control onChange={this.handleChange}/>
+                            <Form.Control name="city" onChange={this.handleChange} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>State</Form.Label>
-                            <Form.Control onChange={this.handleChange}
+                            <Form.Control name="state" onChange={this.handleChange}
                                 as="select"
                                 className="mr-sm-2"
                                 id="inlineFormCustomSelect"
@@ -146,12 +235,25 @@ export class FormulaireOthers extends Component {
                         </Form.Group>
 
                     </Form.Row>
-                  
-                    <Button variant="primary" type="submit">
-                        Submit
+                    <Button>
+                    <Link to = "/" variant="primary" type="submit" onClick= {this.handleSubmit}  >
+                    Submit
+                    
+                        
+                      
+  </Link>
   </Button>
+  
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/">
+        <LoginPage />
+      </Route>
+      </Switch>
+      </BrowserRouter>
                 </Form>
             </div>
+
         )
     }
 }
