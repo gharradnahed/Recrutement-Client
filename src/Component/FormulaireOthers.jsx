@@ -30,40 +30,7 @@ export class FormulaireOthers extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     }
-  /*  onChange = e => {
-        this.setState ({
-            [e.target.name]: e.target.value
-        }) }
-    submitForm= e => {
-        e.preventDefault(); 
-        
-             
-            // localStorage.setItem("token","aaaa");
-
-            this.setState({loggedIn:true})
-          
-
-        
-        
-       
-  handleSubmit = event => {
-        event.preventDefault();
-         console.log(this.state)
-        const user = {
-            nom: this.state.nom,
-            prenom: this.state.prenom,
-            email: this.state.email,
-            phoneNumber: this.state.phone_number,
-            adresse: this.state.adresse,
-            age: this.state.age,
-            sex: this.state.sex,
-            city: this.state.city,
-            state: this.state.state,
-            speciality: this.state.specialite,
-            type: this.state.USER,
-
-        };
-var check=false*/
+ 
       
     handleChange(e) {
         this.setState({[e.target.name]:e.target.value});

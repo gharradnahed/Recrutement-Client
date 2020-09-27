@@ -5,6 +5,7 @@ import { BrowserRouter,Route,Switch } from 'react-router-dom';
 import {LoginPage} from './Component/LoginPage';
 import Profile from './Profile';
 import CompanyProf from './CompanyProf';
+import UserProf from './UserProf';
 
   axios.create({
   baseURL: `http://localhost:5000`
@@ -16,7 +17,16 @@ import CompanyProf from './CompanyProf';
           axios.get('/').then(res=>{
             console.log(res.data);
           })
+          
         }
+/*        componentDidMount(){
+          const config={
+            headers:{
+              authorization: 'Bearer' + localStorage.getItem('token')
+            }
+          };
+           axios.get('http://localhost:5000/api/user',config).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
+        }*/
         render(){
 
        return(
@@ -28,6 +38,8 @@ import CompanyProf from './CompanyProf';
              </Route>
              <Route path="/Profile" component={Profile}></Route>
              <Route path="/CompanyView" component={CompanyProf}></Route>
+             <Route path="/UserProfile" component={UserProf}></Route>
+
              <LoginPage/>
            
             

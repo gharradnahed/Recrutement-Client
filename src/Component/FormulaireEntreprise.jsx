@@ -83,7 +83,7 @@ export class FormulaireEntreprise extends Component {
         return (
             <BrowserRouter>
             <div>
-                <Form >
+                <Form  onSubmit={this.handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
                             <Form.Label>Email</Form.Label>
