@@ -39,13 +39,13 @@ export class LoginPage extends Component {
      submitForm = e => {
          e.preventDefault();
          const data = {
-              email:this.state.email,
+              username:this.state.email,
              password:this.state.password,
             };
        
              Axios.post('http://localhost:5000/auth/login',data)
              .then(res=>{
-                localStorage.setItem("token",data);
+                localStorage.setItem("token",res.data);
 
                  console.log(res);
              }).catch(err=>{
