@@ -7,25 +7,27 @@ import { Redirect,useHistory  } from 'react-router-dom';
 import Profile from '../Profile';
 
 import React, { Component } from 'react';
-import Axios from 'axios';
+import axios from 'axios';
 
-export class LoginPage extends Component {
+ export class LoginPage extends Component {
     constructor(props) {
 
         super();
 
-        const token = localStorage.getItem("token")
-      
-        let loggedIn = false;
+        //const token = localStorage.getItem("token")
+    
         this.state = {
             email: '',
             password: '',
-            loggedIn
+         
+            loggedIn: false,
+            showError: false,
+            showNullError: false,
         }
 
         this.onChange = this.onChange.bind(this);
 
-        this.submitForm = this.submitForm.bind(this);
+        this.loginUser = this.loginUser.bind(this);
 
     }
 
@@ -34,60 +36,70 @@ export class LoginPage extends Component {
             [e.target.name]: e.target.value
         })
     }
-
-    
-     submitForm = e => {
-         e.preventDefault();
-         const data = {
-              email:this.state.email,
-             password:this.state.password,
-            };
-       
-             Axios.post('http://localhost:5000/auth/login',data)
-             .then(res=>{
-                localStorage.setItem("token",data);
-
-                 console.log(res);
-             }).catch(err=>{
-                 console.log(err)
-             } )
-         
-  if (data && data.accessToken) {
-    this.state.loggedIn=true;
-    return { Authorization: 'Bearer ' + data.accessToken,
-    };
-    
-  } else {
-    return {};
-  }
-            
-             
-         }
-    
-
-   /* authHeader() {
-            const data = JSON.parse(localStorage.getItem('user'));
-          
-            if (data && user.accessToken) {
-              return { Authorization: 'Bearer ' + user.accessToken };
-            } else {
-              return {};
+    loginUser = async (e) => {
+        e.preventDefault();
+        const { email, password } = this.state;
+        if (email === '' || password === '') {
+          this.setState({
+            showError: false,
+            showNullError: true,
+            loggedIn: false,
+          });
+        } else {
+          try {
+            const response = await axios.post('http://localhost:5000/auth/login', {
+              email,
+              password,
+            });
+            localStorage.setItem('JWT', response.data.token);
+            this.setState({
+              loggedIn: true,
+              showError: false,
+              showNullError: false,
+            });
+          } catch (error) {
+            console.error(error.response.data);
+            if (
+              error.response.data === 'bad username'
+              || error.response.data === 'passwords do not match'
+            ) {
+              this.setState({
+                showError: true,
+                showNullError: false,
+              });
             }
-          }*/
+          }
+        }
+      };
+    
+    
+            
+
     render() {
-       if (this.state.loggedIn==true) 
-        { 
-       return <a href= "/Profile"></a>
-       }
+        const {
+            email,
+            password,
+            showError,
+            loggedIn,
+            showNullError,
+          } = this.state;
+          if (!loggedIn) {
    
         return (
             
 
             <div className='baground-image' >
+                             <BrowserRouter>
+    <Switch>
+      <Route exact path="/Profile">
+        <Profile/>
+      </Route>
+      </Switch>
+      </BrowserRouter>
                 <Container className='loginbox'>
 
                     <img src={avatar} alt="avatar" className='avatar' />
-                    <Form onSubmit={this.submitForm} >
+                    <Form onSubmit={this.loginUser} >
                         <FormGroup className='recruitement-form'>
                             Recruitement
       </FormGroup>
@@ -102,15 +114,21 @@ export class LoginPage extends Component {
                             <Input input type="password" name="password" placeholder="password" value={this.state.password} onChange={this.onChange} />
                         </FormGroup>
                         <FormGroup>
-                        <Button  variant="primary" type="submit" onClick= {this.submitForm} >
-                    Submit
-                    
-                        
-                      
- 
-  </Button>
+                        <Button  variant="primary" type="submit"  >
+                    Submit</Button>
 
                         </FormGroup>
+                        {showNullError && (
+            <div>
+              <p>The username or password cannot be null.</p>
+            </div>
+          )}
+          {showError && (
+            <div>
+              <p>That username or password is not recognized. Please try
+                again or register now.</p>
+            </div>
+          )}
                         <ul>
                             <li>
                                 <Link to={{ pathname: "https://www.google.com" }}>Lost your password?</Link>
@@ -125,15 +143,11 @@ export class LoginPage extends Component {
                     <br />
                     <br />
                 </Container>
-                <BrowserRouter>
-    <Switch>
-      <Route exact path="/Profile">
-        <Profile/>
-      </Route>
-      </Switch>
-      </BrowserRouter>
+   
             </div>
         )
     }
-}
-export default LoginPage;
+    return <Redirect to={`/Profile ${email}`} />;
+
+}}
+export default LoginPage
