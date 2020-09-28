@@ -14,7 +14,7 @@ import axios from 'axios';
 
         super();
 
-        //const token = localStorage.getItem("token")
+        const token = localStorage.getItem("token")
     
         this.state = {
             email: '',
@@ -51,7 +51,9 @@ import axios from 'axios';
               email,
               password,
             });
-            localStorage.setItem('JWT', response.data.token);
+            localStorage.setItem("token", response.email.token,response.email.token);
+            localStorage.setItem("token",response.email,response.password);
+
             this.setState({
               loggedIn: true,
               showError: false,
