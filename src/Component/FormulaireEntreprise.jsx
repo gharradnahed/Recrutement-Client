@@ -56,11 +56,14 @@ export class FormulaireEntreprise extends Component {
                 sex: this.state.sex,
                 city: this.state.city,
                 state: this.state.state,
-              
+                type:this.state.type
+
                 
     
             };
-            axios.post(`http://localhost:5000/api/register`,  user )
+            axios.post(`http://localhost:5000/api/register`,  user, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
+              } )
             .then(res => {
               console.log(res);
               console.log("test")

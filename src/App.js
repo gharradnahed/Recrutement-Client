@@ -6,7 +6,7 @@ import {LoginPage} from './Component/LoginPage';
 import Profile from './Profile';
 import CompanyProf from './CompanyProf';
 import UserProf from './UserProf';
-
+import Offre from './Offre'
   axios.create({
   baseURL: `http://localhost:5000`
 
@@ -39,6 +39,7 @@ import UserProf from './UserProf';
              <Route path="/Profile" component={Profile}></Route>
              <Route path="/CompanyView" component={CompanyProf}></Route>
              <Route path="/UserProfile" component={UserProf}></Route>
+             <Route path="/Offre" component={Offre}></Route>
 
              <LoginPage/>
            

@@ -3,12 +3,11 @@ import Form from 'react-bootstrap/Form';
 import { Col } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button'
 import axios  from 'axios';
-import {Redirect,BrowserRouter,Switch,Router,Route, Link} from 'react-router-dom';
+import {Redirect,BrowserRouter,Switch,Route, Link} from 'react-router-dom';
 import LoginPage from './LoginPage'
 export class FormulaireOthers extends Component {
     constructor(props) {
         super();
-        let loggedIn = false ;
     this.state = {
         nom: '',
         prenom: '',
@@ -70,19 +69,18 @@ export class FormulaireOthers extends Component {
             state: this.state.state,
             speciality: this.state.specialite,
             password: this.state.password,
-            
-
+            type:this.state.type
         };
          
       
-        axios.post(`http://localhost:5000/api/register`,  user )
+        axios.post(`http://localhost:5000/api/register`,  user , {
+            headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
+          })
         .then(res => {
           console.log(res);
           console.log("test")
           console.log(res.user);    
-        }) .catch(error => {
-            console.log(error.response)
-        });
+        }) ;
         this.setRedirect(); 
       
         
