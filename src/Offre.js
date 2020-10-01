@@ -37,7 +37,9 @@ export default class Offre extends Component {
             <div>
                 
                 
-        <h1>{this.state.offre.map((res)=>   <li>{res}</li>)}</h1>
+        <h1>{this.state.offre.map((e)  =>
+    <h fullName={e.id} gender={e.email} />  
+)}</h1>
             <Button variant="primary" type="submit" >
             Post
           </Button>
