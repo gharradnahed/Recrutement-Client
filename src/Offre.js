@@ -41,7 +41,7 @@ export default class Offre extends Component {
     <h fullName={e.id} gender={e.email} />  
 )}</h1>
             <Button variant="primary" type="submit" >
-            Post
+            Delete
           </Button>
             
        
