@@ -14,7 +14,7 @@ export default class CompanyProf extends Component {
       description: "",
       speciality:"",
       typeofffre:"",
-      offre:[],
+  
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -31,15 +31,16 @@ export default class CompanyProf extends Component {
       typeOffre: this.state.typeoffre,
       specialite: this.state.speciality,
       email:localStorage.getItem("Email"),
+      
     };
     axios
       .post(`http://localhost:5000/offre/api/postOffre`, data, {
         headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
       })
       .then((res) => {
-        console.log(res);
-        console.log("test");
-        console.log(res.data);
+       // console.log(res);
+        //console.log("test");
+      //  console.log(res.data);
       })
       .catch((error) => {
         console.log(error.response);
@@ -48,21 +49,7 @@ export default class CompanyProf extends Component {
 
   }
 
-  componentDidMount(){
-    axios
-    .get(`http://localhost:5000/offre/api/getoffre`, {
-      headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
-    })
-    .then((res) => {
-      
-      console.log(res.data);
-  this.setState.offre(res.data)
-  console.log(this.state.offre)
-    })
-    .catch((error) => {
-      console.log(error.response);
-    });
-  }
+  
   render() {
     return (
       <div>
@@ -98,7 +85,8 @@ export default class CompanyProf extends Component {
           </Button>
         </Form>
         <Container>
-          <Offre data={this.state.offre}/>
+       
+         <Offre/>
         </Container>
       </div>
     );

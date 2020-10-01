@@ -3,7 +3,10 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Nav from "react-bootstrap/Nav";
 import { LoginPage } from "../src/Component/LoginPage";
 import "../src/App";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
+
 import CompanyProf from "../src/CompanyProf";
 import axios from "axios";
 import jwt_decode from "jwt-decode";
@@ -11,24 +14,22 @@ import UserProf from './UserProf';
 export default class Profile extends Component {
   constructor(props) {
     super();
+ 
     this.state = {
     type:localStorage.getItem("Type"),
     token :localStorage.getItem("Token"),
     email:localStorage.getItem("Email"),
-    
 
       
     };
     console.log(this.state)
   }
-  //handleLogout() {
-  ////Auth.signOut();
 
-  ////userHasAuthenticated(false);
 
-  ////history.push("/");
-  //}
- 
+
+    
+  
+
   componentDidMount() {
 
     
@@ -57,9 +58,14 @@ export default class Profile extends Component {
      
 
   }
-
+   handleLogout(){
+    localStorage.clear()
+return(<Link to ="/"/>)
+  }
 
   render() {
+  
+    
     const entreprise=()=>{
       const z=this.state.type
       console.log(z)
@@ -67,11 +73,21 @@ export default class Profile extends Component {
         
        return <CompanyProf/>;
       }else{return <UserProf/>;}
-  
+    
     }
     const handleSelect = (eventKey) => `selected ${eventKey}`;
+ 
+
+
     return (
       <div>
+        <BrowserRouter>
+  <Switch>
+    <Route exact path="/">
+      <LoginPage />
+    </Route>
+  </Switch>
+</BrowserRouter>
         <Nav variant="pills" activeKey="1" onSelect={handleSelect}>
           <NavDropdown
             title="Settings"
@@ -83,7 +99,7 @@ export default class Profile extends Component {
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <li>
-              <NavDropdown.Item eventKey="4.4">Logout</NavDropdown.Item>
+              <NavDropdown.Item eventKey="4.4" onClick={this.handleLogout }>Logout</NavDropdown.Item>
             </li>
           </NavDropdown>
         </Nav>
@@ -91,4 +107,7 @@ export default class Profile extends Component {
       </div>
     );
   }
+
+
+  
 }
