@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Col } from "react-bootstrap";
+import { Col, FormGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
@@ -52,39 +52,44 @@ export default class CompanyProf extends Component {
   
   render() {
     return (
-      <div>
+      <div className="a">
         <Link to="./CompanyView" />
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Row>
-            <Form.Group as={Col}>
+        <Form onSubmit={this.handleSubmit} className="b">
+          <FormGroup>
+          <Form.Label>Type of offre</Form.Label>
+
               <Form.Control
                 type="text"
                 name="typeoffre"
-                placeholder="type of offer"
+                placeholder=" ... "
                 onChange={this.handleChange}
               />
-            </Form.Group>
+            
 
-            <Form.Group as={Col}>
+            <Form.Label>Speciality</Form.Label>
+
               <Form.Control
                 type="text"
                 name="speciality"
-                placeholder="speciality"
+                placeholder="..."
                 onChange={this.handleChange}
               />
-            </Form.Group>
-          </Form.Row>
+            
+          </FormGroup>
+          <Form.Label>description</Form.Label>
+
           <Form.Control
+          as="textarea" rows="3" 
             type="description"
-            placeholder="description"
+            placeholder="..."
             name="description"
             onChange={this.handleChange}
           />
-          <Button variant="primary" type="submit" onClick={this.handleSubmit}>
+          <Button variant="primary"  type="submit" onClick={this.handleSubmit}>
             Post
           </Button>
         </Form>
-        <Container>
+        <Container className="c">
        
          <Offre/>
         </Container>

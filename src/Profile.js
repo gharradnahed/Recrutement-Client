@@ -14,92 +14,96 @@ import UserProf from './UserProf';
 export default class Profile extends Component {
   constructor(props) {
     super();
- 
-    this.state = {
-    type:localStorage.getItem("Type"),
-    token :localStorage.getItem("Token"),
-    email:localStorage.getItem("Email"),
 
-      
+    this.state = {
+      type: localStorage.getItem("Type"),
+      token: localStorage.getItem("Token"),
+      email: localStorage.getItem("Email"),
+
+
     };
     console.log(this.state)
   }
 
 
 
-    
-  
+
+
 
   componentDidMount() {
 
-    
-   
+
+
 
     axios
       .post(`http://localhost:5000/api/byemail`, {
-        
-      email:this.state.email},{
+
+        email: this.state.email
+      }, {
         headers: { Authorization: `Bearer ${this.state.token}` },
-      } )
+      })
       .then((res) => {
         const user = res.data;
-        
 
-       
+
+
         // console.log(decoded)
 
         console.log(user);
-     
+
       })
       .catch((error) => {
         console.log(error.response);
       });
 
-     
+
 
   }
-   handleLogout(){
+  handleLogout() {
     localStorage.clear()
-return(<Link to ="/"/>)
+    return (<div>
+      href="/"
+    </div>)
   }
 
   render() {
-  
-    
-    const entreprise=()=>{
-      const z=this.state.type
+
+
+    const entreprise = () => {
+      const z = this.state.type
       console.log(z)
-      if (z==="Entreprise"){
-        
-       return <CompanyProf/>;
-      }else{return <UserProf/>;}
-    
+      if (z === "Entreprise") {
+
+        return <CompanyProf />;
+      } else { return <UserProf />; }
+
+
     }
     const handleSelect = (eventKey) => `selected ${eventKey}`;
- 
+
 
 
     return (
       <div>
         <BrowserRouter>
-  <Switch>
-    <Route exact path="/">
-      <LoginPage />
-    </Route>
-  </Switch>
-</BrowserRouter>
-        <Nav variant="pills" activeKey="1" onSelect={handleSelect}>
+          <Switch>
+            <Route exact path="/">
+              <LoginPage />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+        <Nav variant="pills" activeKey="1" onSelect={handleSelect} >
           <NavDropdown
             title="Settings"
             id="nav-dropdown"
             className="ajustement"
           >
             <NavDropdown.Item eventKey="4.1" href="/">
-              Profile
+              Home
             </NavDropdown.Item>
             <NavDropdown.Divider />
             <li>
-              <NavDropdown.Item eventKey="4.4" onClick={this.handleLogout }>Logout</NavDropdown.Item>
+              <NavDropdown.Item eventKey="4.4" onClick={this.handleLogout} >Logout</NavDropdown.Item>
             </li>
           </NavDropdown>
         </Nav>
@@ -109,5 +113,5 @@ return(<Link to ="/"/>)
   }
 
 
-  
+
 }
