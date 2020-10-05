@@ -63,7 +63,9 @@ export default class Profile extends Component {
     localStorage.clear()
     return (<div>
       href="/"
-    </div>)
+    </div>
+    )
+    
   }
 
   render() {

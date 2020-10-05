@@ -7,6 +7,8 @@ import Profile from './Profile';
 import CompanyProf from './CompanyProf';
 import UserProf from './UserProf';
 import Offre from './Offre'
+import ForgotPassword from './Component/ForgotPassword'
+import SetNewPassword from './Component/SetNewPassword'
   axios.create({
   baseURL: `http://localhost:5000`
 
@@ -19,14 +21,7 @@ import Offre from './Offre'
           })
           
         }
-/*        componentDidMount(){
-          const config={
-            headers:{
-              authorization: 'Bearer' + localStorage.getItem('token')
-            }
-          };
-           axios.get('http://localhost:5000/api/user',config).then(res=>{console.log(res)}).catch(err=>{console.log(err)})
-        }*/
+
         render(){
 
        return(
@@ -40,7 +35,8 @@ import Offre from './Offre'
              <Route path="/CompanyView" component={CompanyProf}></Route>
              <Route path="/UserProfile" component={UserProf}></Route>
              <Route path="/Offre" component={Offre}></Route>
-
+             <Route path="/forgotPassword" component={ForgotPassword}></Route>
+             <Route path="/setNewPassword" component={SetNewPassword}></Route>
              <LoginPage/>
            
             

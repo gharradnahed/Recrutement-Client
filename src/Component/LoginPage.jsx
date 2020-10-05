@@ -137,7 +137,7 @@ export class LoginPage extends Component {
              
               <ul>
                 <li>
-                  <a href="/ForgotPassword">Lost your password?</a>
+                  <a href="/forgotPassword">Lost your password?</a>
                 </li>
               </ul>
               <ul>

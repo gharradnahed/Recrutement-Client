@@ -48,7 +48,7 @@ export default class Offre extends Component {
                   {data.specialite}
                 </h4>
                 <h5 className="card-title">
-                  <div className="text-info">type of offer::</div> {data.typeOffre}
+                  <div className="text-info">type of offer:</div> {data.typeOffre}
                 </h5>
                 <p className="card-text">
                   <div className="text-info">Description :</div>{" "}
