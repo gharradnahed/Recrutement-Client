@@ -60,13 +60,10 @@ export default class Profile extends Component {
 
   }
   handleLogout() {
-    localStorage.clear()
-    return (<div>
-      href="/"
-    </div>
-    )
+    window.location.href = '/';
+        localStorage.clear('Token');}
     
-  }
+ 
 
   render() {
 

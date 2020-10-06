@@ -117,6 +117,7 @@ body{
   height: 700px;
   border-width: thin; 
   border: 3px solid silver;
+ ;
 } 
 
 .c {
@@ -126,7 +127,52 @@ body{
   border-width: thin; 
   height: 700px;
   border: 3px solid silver;
+  box-sizing: border-box;
+  background: url('./image/bag.jpg')
 } 
-   
+.blocktext {
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  
+ 
+    
+    border-color: #555;
+  padding: 20px;
+}
+.displayed {
+  display: block;
+  margin-left: auto;
+  margin-right: auto }
 
-
+.placeholder{
+  
+      border: 3px solid #555;
+      transition: width 0.4s ease-in-out;}
+.baground-forgot{
+        position: fixed;
+        min-width: 100%;
+        min-height: 100%;
+        background: url('./image/forg.jpg');
+        background-size: cover;
+      background-position:center;
+      }
+.photo{
+  display: block;
+  margin-left: auto;
+  margin-right: auto ;
+	height: 250px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+ 
+}
+.baground-offre{
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  background: url('./image/bag.jpg');
+  background-size: cover;
+background-position:center;
+}

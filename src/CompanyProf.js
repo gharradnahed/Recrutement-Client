@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component  } from "react";
 import { Link } from "react-router-dom";
 import { Col, FormGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
@@ -6,10 +6,13 @@ import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { Container } from "reactstrap";
 import Offre from "./Offre";
+import pushOffre from "./image/pushOffre.png"
+import PureModal from 'react-pure-modal';
+import 'react-pure-modal/dist/react-pure-modal.min.css';
+
 export default class CompanyProf extends Component {
   constructor(props) {
     super();
-
     this.state = {
       description: "",
       speciality:"",
@@ -48,14 +51,16 @@ export default class CompanyProf extends Component {
 
 
   }
-
   
+
   render() {
+  
     return (
       <div className="a">
         <Link to="./CompanyView" />
-        <Form onSubmit={this.handleSubmit} className="b">
-          <FormGroup>
+        <Form onSubmit={this.handleSubmit} className="b" >
+    
+          <FormGroup >
           <Form.Label>Type of offre</Form.Label>
 
               <Form.Control
