@@ -4,8 +4,6 @@ import Nav from "react-bootstrap/Nav";
 import { LoginPage } from "../src/Component/LoginPage";
 import "../src/App";
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 import CompanyProf from "../src/CompanyProf";
 import axios from "axios";
@@ -68,16 +66,9 @@ export default class Profile extends Component {
   render() {
 
 
-    const entreprise = () => {
-      const z = this.state.type
-      console.log(z)
-      if (z === "Entreprise") {
-
-        return <CompanyProf />;
-      } else { return <UserProf />; }
-
-
-    }
+    const typeAcount = localStorage.getItem("Type");
+    let entreprise =
+      typeAcount === "Entreprise" ? <CompanyProf /> : <UserProf />;
     const handleSelect = (eventKey) => `selected ${eventKey}`;
 
 
@@ -106,7 +97,7 @@ export default class Profile extends Component {
             </li>
           </NavDropdown>
         </Nav>
-        {entreprise()}
+        {entreprise}
       </div>
     );
   }

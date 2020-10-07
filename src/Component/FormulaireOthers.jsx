@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Form from 'react-bootstrap/Form';
-import { Col } from 'react-bootstrap';
+import { Col } from "reactstrap";
 import Button from 'react-bootstrap/Button'
 import axios  from 'axios';
 import {Redirect,BrowserRouter,Switch,Route, Link} from 'react-router-dom';
@@ -22,7 +22,7 @@ export class FormulaireOthers extends Component {
         specialite: '',
         type: 'User',
         redirect:false,
-        
+        secret:'',
         
     }
    
@@ -69,7 +69,8 @@ export class FormulaireOthers extends Component {
             state: this.state.state,
             speciality: this.state.specialite,
             password: this.state.password,
-            type:this.state.type
+            type:this.state.type,
+            secret:this.state.secret,
         };
          
       
@@ -123,21 +124,24 @@ export class FormulaireOthers extends Component {
                     </Form.Row>
 
 
+                   
+                    <Form.Row>
                     <Form.Group controlId="numtel">
                         <Form.Label>Phone number</Form.Label>
 
                         <Form.Control placeholder="00216 25 365 366 tunis for exemple" name="phone_number" onChange={this.handleChange} />
                     </Form.Group>
-
                     <Form.Group controlId="formGridAddress1">
                         <Form.Label>speciality</Form.Label>
                         <Form.Control placeholder="       "   name="specialite" onChange={this.handleChange} />
                     </Form.Group>
-                    <Form.Row>
-                        <Form.Group controlId="formGridAddress1">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control type="text" name="adresse"  placeholder="1234 tunis for exemple" onChange={this.handleChange} />
+                    <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Label>What is your favorite company</Form.Label>
+                            <Form.Control name="secret" placeholder="this is for  your account secuirity" onChange={this.handleChange} />
                         </Form.Group>
+                        </Form.Row>
+                    <Form.Row>
+                       
                         <Form.Group controlId="formGridAddress1">
                             <Form.Label>Age</Form.Label>
                             <Form.Control placeholder="Put your age please" name="age" onChange={this.handleChange} />
@@ -155,13 +159,18 @@ export class FormulaireOthers extends Component {
                             </Form.Control >
                         </Form.Group>
 
-
+                        <Form.Group controlId="formGridAddress1">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control type="text" name="adresse"  placeholder="tunis for exemple" onChange={this.handleChange} />
+                        </Form.Group>
                     </Form.Row>
+                    
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity">
                             <Form.Label>City</Form.Label>
                             <Form.Control name="city" onChange={this.handleChange} />
-                        </Form.Group>
+                        </Form.Group> 
+                        
 
                         <Form.Group as={Col} controlId="formGridState">
                             <Form.Label>State</Form.Label>
@@ -200,14 +209,10 @@ export class FormulaireOthers extends Component {
                         </Form.Group>
 
                     </Form.Row>
-                    <Button>
-                    <Link to = "/" variant="primary" type="submit" onClick= {this.handleSubmit}  >
-                    Submit
-                    
-                        
-                      
-  </Link>
-  </Button>
+                    <Button variant="primary" color="secondary" type="submit" size="lg" block>
+                  Submit
+                </Button>
+
   
   <BrowserRouter>
     <Switch>

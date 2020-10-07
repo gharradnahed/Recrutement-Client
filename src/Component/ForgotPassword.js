@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Container } from 'reactstrap';
 import Form from 'react-bootstrap/Form'
 import cle from '../image/cle.png'
+import { Redirect, useHistory } from "react-router-dom";
 const title = {
     pageTitle: 'Forgot Password Screen',
 };
@@ -13,88 +14,85 @@ class ForgotPassword extends Component {
 
         this.state = {
             email: '',
-            showError: false,
-            messageFromServer: '',
-            showNullError: false,
+            loggedIn: false,
+
         };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange  = (e) => {
-        
-    
-        this.setState({
-          [e.target.email]: e.target.value,
-        });
-      };
+    handleChange = (e) => {
 
-    componentDidMoun = async (e) => {
+       
+
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    handleSubmit(e) {
         e.preventDefault();
-        const { email } = this.state;
-        if (email === "") {
-            this.setState({
-                showError: false,
-                showNullError: true,
-                loggedIn: false,
-                
-            });
-        } else {
-            try {
-                const response = axios.post('http://localhost:5000/api/byemail', {
-                    username: this.state.email,})  .then((res) => {
-                      
-                       
-                        console.log(res)
-                        
-                      });
-                      
-                  }
-                  catch{
-                          console.log("email not found")
-                  }
-                }
-                
-        
+        console.log(this.state.email)
+        let data = {
+            email: this.state.email,
+        }
+        // if (email === "") {
+        // this.setState({
+        //      showError: false,
+        //     showNullError: true,
+        //     loggedIn: false,
+
+        //    });
+        // } else {
+
+        //  console.log(email)
+        axios.post('http://localhost:5000/api/byemail',
+            data).then((res) => {
+                console.log(res);
+                console.log(res.data.secret);
+
+
+                this.setState({ loggedIn: true })
+                console.log(this.state.loggedIn)
+                localStorage.setItem("Email", this.state.email);
+                localStorage.setItem("secret", res.data.secret);
+                window.location.reload();
+
+            }).catch(err => {
+                console.log(err.Response)
+
+            })
+
+
+
+        //  }
+
+
     }
 
     render() {
         const {
             email, messageFromServer, showNullError, showError
         } = this.state;
-
+        if(this.state.loggedIn){return (<Redirect to="/SecretKey"/>)}
         return (
             <div className="baground-image">
                 <Container className="blocktext">
                     <img src={cle} alt="cle" className="displayed " />
 
-                    <form onSubmit={this.componentDidMount}>
+                    <form onSubmit={this.handleSubmit}>
                         <Form.Control
                             className="placeholder"
                             type="email"
-                            label="email"
-                            value={email}
-                            onChange={this.handleChange()}
+
+                            name="email"
+
+                            onChange={this.handleChange}
                             placeholder="Email Address"
                         ></Form.Control >
-                        <Button color="primary" size="lg" block onClick={this.C}>Change Password</Button>
+                        <Button color="primary" size="lg" block >Change Password</Button>
                     </form>
-                    {showNullError && (
-                        <div>
-                            <p>The email address cannot be null.</p>
-                        </div>
-                    )}
-                    {showError && (
-                        <div>
-                            <p>
-                                That email address isn't recognized. Please try again or
-                                register for a new account.
-                        </p>
-                        </div>
-                    )}
-                    {messageFromServer === 'recovery email sent' && (
-                        <div>
-                            <h3>Password Reset Email Successfully Sent!</h3>
-                        </div>
-                    )}
+
                     <Button color="secondary" href="/" size="lg" block> Login page</Button>
                 </Container>
             </div>

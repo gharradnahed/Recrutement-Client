@@ -1,13 +1,12 @@
 import React, { Component  } from "react";
 import { Link } from "react-router-dom";
-import { Col, FormGroup } from "react-bootstrap";
+import {  FormGroup } from "react-bootstrap"
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { Container } from "reactstrap";
 import Offre from "./Offre";
-import pushOffre from "./image/pushOffre.png"
-import PureModal from 'react-pure-modal';
+
 import 'react-pure-modal/dist/react-pure-modal.min.css';
 
 export default class CompanyProf extends Component {
@@ -41,6 +40,7 @@ export default class CompanyProf extends Component {
         headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
       })
       .then((res) => {
+        window.location.reload();
        // console.log(res);
         //console.log("test");
       //  console.log(res.data);

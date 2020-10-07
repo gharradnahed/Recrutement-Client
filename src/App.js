@@ -9,6 +9,7 @@ import UserProf from './UserProf';
 import Offre from './Offre'
 import ForgotPassword from './Component/ForgotPassword'
 import SetNewPassword from './Component/SetNewPassword'
+import SecretKey from './Component/SecretKey'
   axios.create({
   baseURL: `http://localhost:5000`
 
@@ -17,7 +18,6 @@ import SetNewPassword from './Component/SetNewPassword'
         constructor(){
           super();
           axios.get('/').then(res=>{
-            console.log(res.data);
           })
           
         }
@@ -35,8 +35,10 @@ import SetNewPassword from './Component/SetNewPassword'
              <Route path="/CompanyView" component={CompanyProf}></Route>
              <Route path="/UserProfile" component={UserProf}></Route>
              <Route path="/Offre" component={Offre}></Route>
-             <Route path="/forgotPassword" component={ForgotPassword}></Route>
+             <Route exact path="/forgotPassword" component={ForgotPassword}></Route>
              <Route path="/setNewPassword" component={SetNewPassword}></Route>
+             <Route path="/SecretKey" component={SecretKey}></Route>
+
              <LoginPage/>
            
             

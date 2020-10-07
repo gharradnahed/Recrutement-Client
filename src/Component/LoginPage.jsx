@@ -1,11 +1,10 @@
 import "../App.css";
-import avatar from "../image/avatar.png";
+import avatar from "../image/user.png";
 import { Form, Container, FormGroup, Label, Input, Button } from "reactstrap";
-import { Link } from "react-router-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect} from "react-router-dom";
 import Profile from "../Profile";
-import { withRouter } from "react-router-dom";
+
 
 import React, { Component } from "react";
 import axios from "axios";
@@ -58,17 +57,22 @@ export class LoginPage extends Component {
             
           })
           .then((res) => {
+            
             localStorage.setItem("Token", res.data.access_token);
-            this.setState( {loggedIn: true,})
-            localStorage.setItem("Email",this.state.email)
-            localStorage.setItem("Type",res.data.type )
-           // this.props.history.go('/Profile')
+
+            localStorage.setItem("Email", this.state.email);
+            localStorage.setItem("Type", res.data.type);
+            window.location.reload();
+            this.setState({ loggedIn: true });
+            // this.props.history.go('/Profile')
             
           });
           
       }
       catch{
-
+        this.setState({showError: false,
+        showNullError: true,
+        loggedIn: false,})
       }
     }
   };
@@ -86,9 +90,9 @@ export class LoginPage extends Component {
   </Switch>
 </BrowserRouter>
           <Container className="loginbox">
-            <img src={avatar} alt="avatar" className="avatar" />
+            <img src={avatar} alt="avatar" className="avatar2" />
             <Form onSubmit={this.loginUser}>
-              <FormGroup className="recruitement-form">Recruitement</FormGroup>
+              
               <FormGroup>
                 <Label className="h1" for="exampleEmail">
                   Email
@@ -117,7 +121,7 @@ export class LoginPage extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" size="lg" block>
                   Submit
                 </Button>
               </FormGroup>

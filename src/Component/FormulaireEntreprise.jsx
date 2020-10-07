@@ -21,7 +21,7 @@ export class FormulaireEntreprise extends Component {
  
         type: 'Entreprise',
         redirect:false,
-        
+        secret:'',
         
     }
    
@@ -56,8 +56,8 @@ export class FormulaireEntreprise extends Component {
                 sex: this.state.sex,
                 city: this.state.city,
                 state: this.state.state,
-                type:this.state.type
-
+                type:this.state.type,
+                secret:this.state.secret,
                 
     
             };
@@ -89,40 +89,48 @@ export class FormulaireEntreprise extends Component {
                 <Form  onSubmit={this.handleSubmit}>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridEmail">
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label className="recruitement-form">Email</Form.Label>
                             <Form.Control type="email" name='email' placeholder="Company@gmail.com" onChange={this.handleChange} />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridPassword">
-                            <Form.Label>Password</Form.Label>
+                            <Form.Label className="recruitement-form">Password</Form.Label>
                             <Form.Control type="password" name ='password' placeholder="Password" onChange={this.handleChange} />
                         </Form.Group>
                     </Form.Row>
                   
-
-                    <Form.Group controlId="numtel">
-                        <Form.Label>Numero du télephone</Form.Label>
+                    <Form.Row>
+                    <Form.Group as={Col} controlId="numtel">
+                        <Form.Label className="recruitement-form">Numero du télephone</Form.Label>
                         <Form.Control placeholder="00216 25 365 366 "  name='phoneNumber'onChange={this.handleChange}  />
                     </Form.Group>
-                    <Form.Group controlId="formGridAddress2">
-                        <Form.Label>Site  Web</Form.Label>
+                    <Form.Group as={Col} controlId="formGridAddress2">
+                        <Form.Label className="recruitement-form">Site  Web</Form.Label>
                         <Form.Control placeholder="www.exemple.com" name='siteWeb' onChange={this.handleChange} />
                     </Form.Group>
-                    <Form.Group controlId="formGridAddress1">
-                        <Form.Label>Address</Form.Label>
+                    </Form.Row>
+                    <Form.Row>
+                    <Form.Group  as={Col} controlId="formGridAddress1">
+                        <Form.Label className="recruitement-form">Address</Form.Label>
                         <Form.Control placeholder=" tunis for exemple" name='adress' onChange={this.handleChange} />
                     </Form.Group>
+                    <Form.Group as={Col} controlId="formGridCity">
+                            <Form.Label className="recruitement-form">What is your favorite company</Form.Label>
+                            <Form.Control name="secret" placeholder="this is for  your account secuirity" onChange={this.handleChange} />
+                        </Form.Group>
+                        </Form.Row>
                     <Form.Row>
                         <Form.Group as={Col} controlId="formGridCity"onChange={this.handleChange} >
-                            <Form.Label name='city'>City  </Form.Label>
+                            <Form.Label className="recruitement-form" name='city'>City  </Form.Label>
                             <Form.Control />
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridState" onChange={this.handleChange} >
-                            <Form.Label name='state'>State</Form.Label>
+                            <Form.Label className="recruitement-form" name='state'>State</Form.Label>
                             <Form.Control
                                 as="select"
                                 className="mr-sm-2"
+                                className="recruitement-form"
                                 id="inlineFormCustomSelect"
                                 custom
                             >
@@ -155,14 +163,9 @@ export class FormulaireEntreprise extends Component {
                         </Form.Group>
 
                     </Form.Row>
-                    <Button>
-                    <Link to = "/" variant="primary" type="submit" onClick= {this.handleSubmit}  >
-                    Submit
-                    
-                        
-                      
-  </Link>
-  </Button>
+                    <Button variant="primary" color="secondary" type="submit" size="lg" block>
+                  Submit
+                </Button>
                 </Form>
             </div>
             </BrowserRouter>

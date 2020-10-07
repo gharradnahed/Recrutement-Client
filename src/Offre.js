@@ -1,109 +1,153 @@
-import React, { Component, useState, setShow, show, handleClose, handleShow } from 'react'
+import React, {
+  Component,
+ 
+} from "react";
 
-import axios from 'axios';
-import { Col, FormGroup } from "react-bootstrap";
-import Modal from 'react-bootstrap/Modal'
-import ModalTitle from 'react-bootstrap/ModalTitle'
-import ModalHeader from 'react-bootstrap/ModalHeader'
-import Button from "react-bootstrap/Button";
+import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+
 
 export default class Offre extends Component {
-
-
   state = {
-
     offre: [],
-    show:false,
+    show: false,
+    dataDesc: {},
+dataDelete:{},  };
+  handleChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
   };
-componentDidUpdate(){
-  axios.delete('/api/deleteoffre/:id').then((res) => {
-    let result = res.data
-    console.log(result)
-
-  })
-  .catch((error) => {
-    console.log(error.response);
-  });
-return(this.result)
-
-}
+  componentDidUpdate(data) {
+ //  this.setState({ dataDelete: data });
+    ///const id= this.state.dataDelete.id
+     console.log(data.id)
+    axios
+      .delete('/api/deleteoffre/'+data.id)
+      .then((res) => {
+        let result = res.data;
+        console.log(result);
+      })
+      .catch((error) => {
+        console.log(error.response);
+      });
+    return this.result;
+  }
   componentDidMount() {
     axios
       .get(`http://localhost:5000/offre/api/getoffre`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("Token")}` },
       })
       .then((res) => {
-        const offre = res.data
-        this.setState({ offre })
-        console.log(offre)
-
+       const offre = res.data;
+        this.setState({ offre });
+        console.log(offre);
+        
       })
       .catch((error) => {
         console.log(error.response);
       });
-    return (this.state.offre)
+     
+    return this.state.offre;
   }
-  handleModal() {
-    this.setState({show:!this.state.show,})
+  handleModal(data) {
+    this.setState({ show: true, dataDesc: data });
+    console.log(this.statedataDesc)
   }
- 
+  closeModal = () => {
+    this.setState({ show: false });
+  };
+
   render() {
     const { offre } = this.state;
     return (
-
-      <div className="d-flex d-flex justify-content-between flex-wrap">
-        {offre.map((data) => (
-          <div
-            className="card"
-            style={{ width: "18rem", marginTop: "50px" }}
-            key={data.id}
-          >
-
-
-            <div className="card-body">
-              <h4 className="card-title">
-                <div className="text-info"> Speciality:</div>{" "}
-                {data.specialite}
-              </h4>
-              <h5 className="card-title">
-                <div className="text-info">type of offer:</div> {data.typeOffre}
-              </h5>
-              <p className="card-text">
-                <div className="text-info">Description :</div>{" "}
-                {data.description}
-                
-              </p>
-              
-              <FormGroup>
-                <Button variant="primary" type="submit" >
-                  Delete
-          </Button>
-                <Button variant="primary" type="submit" onClick={()=>{this.handleModal()}} >
-                  Show more
-          </Button>
-          <Modal scrollable={true} show={this.state.show}tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" onHide={()=>{this.handleModal()}} >
-                <Modal.Header closeButton>
-                  <Modal.Title>Description:</Modal.Title>
-                </Modal.Header>
-        <Modal.Body > <div className="text-info"></div>{" "}
-                {data.description}
-              </Modal.Body>
-                 
-                  
-              </Modal>
-              </FormGroup>
-           
+      <section className="sptb" >
+        <div className="container">
+          <div className="section-title center-block text-center">
+            <h1>Your Posts</h1>
+            <p>
+              You find all your posts here
+            </p>
+          </div>
+          <div className="panel panel-primary">
+            <div className="panel-body">
+              <div className="tab-content">
+                <div className="tab-pane active show" id="index1">
+                  <div className="row">
+                    {offre.map((data) => (
+                      <div className="col-xl-4 col-md-6" name="key" key={data.id} >
+                        <div className="card overflow-hidden">
+                          <div className="card-body">
+                            <div className="item-card7-desc">
+                              <div className="item-card7-text">
+                                <h4 className="font-weight-semibold">
+                                  {data.specialite}
+                                </h4>
+                              </div>
+                              <p className="mb-0">{data.description}</p>
+                            </div>
+                          </div>
+                          <div className="card-body py-2">
+                            {" "}
+                            <a
+                              href="mr-4"
+                              className="icons font-weight-semibold text-body"
+                            >
+                              <i className="fa fa-usd  text-muted mr-1 " /> Offre
+                              type :
+                            </a>{" "}
+                            <a className="mr-4 float-right">
+                              <i className="fa fa-clock-o  text-muted mr-1" />
+                              {data.typeOffre}
+                            </a>{" "}
+                          </div>
+                          <div className="card-body py-2">
+                            <div className="d-flex align-items-center mt-auto">
+                              <div className=" text-muted">
+                                {" "}
+                                <a className="btn btn-primary text-white" onClick={()=>{
+                                    this.componentDidUpdate(data)}}>delete </a>{""}
+                                <a
+                                  onClick={() => {
+                                    this.handleModal(data);
+                                  }}
+                                  className="btn btn-primary text-white"
+                                >
+                                  See Details
+                                </a>{" "}
+                                <Modal
+                                  scrollable={true}
+                                  show={this.state.show}
+                                  tabindex="-1"
+                                  role="dialog"
+                                  aria-labelledby="exampleModalLongTitle"
+                                  aria-hidden="true"
+                                  onHide={() => {
+                                    this.closeModal();
+                                  }}
+                                >
+                                  <Modal.Header closeButton>
+                                    <Modal.Title>Description:</Modal.Title>
+                                  </Modal.Header>
+                                  <Modal.Body>
+                                    {" "}
+                                    <div className="text-info"></div>{" "}
+                                    {this.state.dataDesc.description}
+                                  </Modal.Body>
+                                </Modal>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        ))}
-
-
-
-
-
-
-
-      </div>
-    )
+        </div>
+      </section>
+    );
   }
 }
