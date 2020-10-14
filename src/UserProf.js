@@ -51,61 +51,112 @@ export default class CompanyProf extends Component {
           return data
       }
     }).map((data) => (
-            <div
-              className="card"
-              style={{ width: "18rem", marginTop: "50px" }}
-              key={data.id}
-            >
-
-
-              <div className="card-body">
-                <h4 className="card-title">
-                  <div className="text-info"> Speciality:</div>{" "}
-                  {data.specialite}
-                </h4>
-                <h5 className="card-title">
-                  <div className="text-info">
- offer type:</div> {data.typeOffre}
-                </h5>
-                <p className="card-text">
-                  <div className="text-info">Description :</div>{" "}
-                  {data.description}
-                </p>
-                <div className="text-info">Contact :</div>{" "}
-          <p>Email: {data.author.email}</p>
-         
-          <p>Phone number:{data.author.phoneNumber}</p>
-    <div className="text-info">Adress:{data.author.phoneNumber.adresse}{data.author.phoneNumber.city}{data.author.phoneNumber.state}</div>
-          <a
-                                  onClick={() => {
-                                    this.handleModal(data);
-                                  }}
-                                  className="btn btn-primary text-white"
-                                >
-                                  See Details
-                                </a>{" "}
-                                <Modal
-                                  scrollable={true}
-                                  show={this.state.show}
-                                  tabindex="-1"
-                                  role="dialog"
-                                  aria-labelledby="exampleModalLongTitle"
-                                  aria-hidden="true"
-                                  onHide={() => {
-                                    this.closeModal();
-                                  }}
-                                >
-                                  <Modal.Header closeButton>
-                                    <Modal.Title>Description:</Modal.Title>
-                                  </Modal.Header>
-                                  <Modal.Body>
-                                    {" "}
-                                    <div className="text-info"></div>{" "}
-                                    {this.state.dataDesc.description}
-                                  </Modal.Body>
-                                </Modal>
-              </div>
+      <div className="col-xl-4 col-md-6" key={data.id}>
+      <div className="card overflow-hidden">
+        <div className="card-body">
+          <div className="item-card7-desc">
+            <div className="item-card7-text">
+              <h4 className="font-weight-semibold">
+                {data.specialite}
+              </h4>
             </div>
+            <p className="mb-0">{data.description}</p>
+          </div>
+        </div>
+        <div className="card-body py-2">
+          {" "}
+          <a
+            href="mr-4"
+            className="icons font-weight-semibold text-body"
+          >
+            <i className="fa fa-usd  text-muted mr-1" /> Offre
+            type :
+          </a>{" "}
+          <a className="mr-4 float-right">
+            <i className="fa fa-clock-o  text-muted mr-1" />
+            {data.typeOffre}
+          </a>{" "}
+          
+          
+        </div>
+         <div className="card-body py-2">
+          {" "}
+          <a
+            href="mr-4"
+            className="icons font-weight-semibold text-body"
+          >
+            <i className="fa fa-usd  text-muted mr-1" /> Email
+          </a>{" "}
+          <a className="mr-4 float-right">
+            <i className="fa fa-clock-o  text-muted mr-1" />
+            {data.author.email}
+          </a>{" "}
+        </div>
+        <div className="card-body py-2">
+          {" "}
+          <a
+            href="mr-4"
+            className="icons font-weight-semibold text-body"
+          >
+            <i className="fa fa-usd  text-muted mr-1" /> Phone Number
+          </a>{" "}
+          <a className="mr-4 float-right">
+            <i className="fa fa-clock-o  text-muted mr-1" />
+            {data.author.phoneNumber}
+          </a>{" "}
+          </div>
+          <div className="card-body py-2">
+          {" "}
+          <a
+            href="mr-4"
+            className="icons font-weight-semibold text-body"
+          >
+            <i className="fa fa-usd  text-muted mr-1" /> Adress
+          </a>{" "}
+          <a className="mr-4 float-right">
+            <i className="fa fa-clock-o  text-muted mr-1" />
+            {data.author.adresse}   {data.author.city}   {data.author.state}
+          </a>{" "}
+        </div>
+        
+        <div className="card-body py-2">
+          <div className="d-flex align-items-center mt-auto">
+            <div className=" text-muted">
+              {" "}
+              
+              <a
+                onClick={() => {
+                  this.handleModal(data);
+                }}
+                className="btn btn-primary text-white"
+              >
+                See Details
+              </a>{" "}
+              <Modal
+                scrollable={true}
+                show={this.state.show}
+                tabindex="-1"
+                role="dialog"
+                aria-labelledby="exampleModalLongTitle"
+                aria-hidden="true"
+                onHide={() => {
+                  this.closeModal();
+                }}
+              >
+                <Modal.Header closeButton>
+                  <Modal.Title>Description:</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  {" "}
+                  <div className="text-info"></div>{" "}
+                  {this.state.dataDesc.description}
+                </Modal.Body>
+              </Modal>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
             
             
           ))}

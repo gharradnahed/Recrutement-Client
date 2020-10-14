@@ -197,7 +197,8 @@ background-position:center;
   padding: 70px 30px;
 }
 .user{
- 
+  margin-top: 20px;
+  height: 950px;
   background: url('./image/bag.jpg');
 
 }
